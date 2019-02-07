@@ -1,0 +1,114 @@
+concept: ~question (ask question query)
+concept: ~option (open ~question message)
+
+topic: ~introductions repeat keep []
+
+t: ($userName==null)	
+	[Hello]
+	[Hi] 
+	[G'day] 
+	[Hello there] 
+	[Why hello there] , I'm Thea, the Virtual Receptionist! 
+
+t: (clear) ^keep()
+	$userName = null
+	$option = null
+	$authenticated = false
+	$question = null
+
+t: (authenticate) ^keep()
+	$authenticated = true
+
+#! person approaced with name Zac
+#! person approached with name Scott
+#! person approached with name Tuan 
+s: STATEMENT_GREET (person approached with name _~noun) ^keep() ^repeat()
+	$userName = _0
+	$authenticated = true
+	[Hello $userName]
+	[G'day $userName]
+	[Hi $userName]
+
+#! person has left
+s: STATEMENT_GOODBYE (person has left) ^keep() ^repeat()
+	[Goodbye $userName, have a good day!]
+	[See ya $userName, hope I was of some help!]
+	[Have a good day!]
+	
+	$userName = null
+	$authenticated = false
+	$option = null 
+
+t: GAMBIT_NAME ($userName==null) ^keep()
+	Who are you? 
+
+	#! My name is Zac
+	#! I am Zac
+	#! I'm Zac
+	#! Zac
+	a: ({I} {["name is"][be]} _* {, } *)
+		$userName = _0
+		[Hello $userName, its nice to meet you.]
+		[G'day $userName, its very nice to meet you.]
+		[Hi $userName, pleasure to meet you.]
+
+t: GAMBIT_OPTION ($option==null) ^keep()
+	What can I help you with?
+
+	#! Can I ask you a question? 
+	#! I need to ask you something
+	#! Can you open the door 
+	#! I need the door open
+	#! Please open the door for me
+	#! Open
+	#! Can you leave someone a message?
+	#! I need to send a message 
+	a: (* _~option *)
+		$option = _0
+	
+t: GAMBIT_OPTION_ASK ($option?~question) ^keep()
+	$option = null
+
+	[Sure thing ask away!]
+	[What would you like to know?]
+	[Ask me anything you like!]
+
+	a: (_*)
+		$question = '_0
+		You asked the following: $question
+
+t: GAMBIT_OPTION_OPEN ($option==open) ^keep()
+	$option = null
+
+	if ($authenticated == true)
+	{
+		[Sure, opening the door now, have a good day!]
+		[Opening the door now, have a wonderful day!]
+		[Sure thing, requesting it to open now, have a good day!]
+	}	
+	else
+	{
+		[Sorry, you aren't authorized to make that request]
+		[Sorry, I don't know you well enough for that!]
+		[Very sorry, but you don't have the correct credentials]
+	}
+
+t: GAMBIT_OPTION_MESSAGE ($option==message) ^keep()
+	$option = null
+
+	[What is the messsage?]
+	[What would you like to say?]
+	[Please say the message.]
+
+	a: (_*)
+		$message = '_0
+		[Who are we sending this message to?]
+		[Who do I need to send this to?] 
+
+		b: (_*)
+			$recipient = _0
+			[Alright, the message \" $message \" was sent to $recipient]
+			[Sending \" $message \" to $recipient]
+			[I will get \" $message \" to $recipient, have a good day!]
+
+

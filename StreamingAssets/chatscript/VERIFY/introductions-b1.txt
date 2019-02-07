@@ -1,0 +1,16 @@
+﻿ ~introductions.3.0 #! person approaced with name Zac
+ ~introductions.3.0 #! person approached with name Scott
+ ~introductions.3.0 #! person approached with name Tuan 
+ ~introductions.4.0 #! person has left
+     ~introductions.5.1 #! My name is Zac
+     ~introductions.5.1 #! I am Zac
+     ~introductions.5.1 #! I'm Zac
+     ~introductions.5.1 #! Zac
+     ~introductions.6.1 #! Can I ask you a question? 
+     ~introductions.6.1 #! I need to ask you something
+     ~introductions.6.1 #! Can you open the door 
+     ~introductions.6.1 #! I need the door open
+     ~introductions.6.1 #! Please open the door for me
+     ~introductions.6.1 #! Open
+     ~introductions.6.1 #! Can you leave someone a message?
+     ~introductions.6.1 #! I need to send a message 
