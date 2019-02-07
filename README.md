@@ -1,5 +1,6 @@
 # Unity ChatScript Plugin
-Native plugin for Unity to use ChatScript 
+Native plugin for Unity to use ChatScript. 
+The native `chatscript.dll` has been compiled from [this](https://github.com/zacbrannelly/ChatScript) fork of `ChatScript`
 
 ## Requirements
 - Only built to work on Windows 64bit
